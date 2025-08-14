@@ -1,0 +1,71 @@
+<!--- index.html --->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Music Player</title>
+  <style>
+    /*  loopingList.css */
+
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #222;
+      color: #fff;
+    }
+
+    .player {
+      text-align: center;
+      background: #333;
+      padding: 30px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="player">
+    <h1>Now Playing:</h1>
+    <p id="song-title">Loading...</p>
+    <audio id="audio" controls></audio>
+  </div>
+
+  <script>
+    /*  loopingList.js */
+
+    const songs = [
+      { title: "6 Underground", src: "6 Underground.m4a" },
+      { title: "You Know I'm No Good", src: "You Know I'm No Good.m4a" },      
+      { title: "Sadeness", src: "Sadeness.m4a" },
+      { title: "Sour Times", src: "Sour Times.m4a" },
+      { title: "Out of the Blue", src: "Out of the Blue.m4a" },
+        
+    ];
+
+    let currentSong = 0;
+    const audio = document.getElementById('audio');
+    const songTitle = document.getElementById('song-title');
+
+    // Load and play the current song
+    function loadSong(index) {
+      audio.src = songs[index].src;
+      songTitle.textContent = songs[index].title;
+      audio.play();
+    }
+
+    // Move to next song when current ends
+    audio.addEventListener('ended', () => {
+      currentSong = (currentSong + 1) % songs.length;
+      loadSong(currentSong);
+    });
+
+    // Start with the first song
+    loadSong(currentSong);
+  </script>
+</body>
+</html>
